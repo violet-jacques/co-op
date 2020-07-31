@@ -1,0 +1,10 @@
+[2020-07-31 15:47:42.192] [exthost] [info] extension host started
+[2020-07-31 15:47:42.206] [exthost] [info] ExtensionService#_doActivateExtension vscode.debug-auto-launch {"startup":true,"extensionId":{"value":"vscode.debug-auto-launch","_lower":"vscode.debug-auto-launch"},"activationEvent":"*"}
+[2020-07-31 15:47:42.207] [exthost] [info] ExtensionService#loadCommonJSModule file:///private/var/folders/hj/4w0jzmxx1yjcmd2g3jc3wdv00000gp/T/AppTranslocation/4F177775-F1ED-4967-905B-EA989C4E42BE/d/Visual Studio Code.app/Contents/Resources/app/extensions/debug-auto-launch/dist/extension
+[2020-07-31 15:47:42.210] [exthost] [info] ExtensionService#_doActivateExtension vscode.emmet {"startup":true,"extensionId":{"value":"vscode.emmet","_lower":"vscode.emmet"},"activationEvent":"*"}
+[2020-07-31 15:47:42.210] [exthost] [info] ExtensionService#loadCommonJSModule file:///private/var/folders/hj/4w0jzmxx1yjcmd2g3jc3wdv00000gp/T/AppTranslocation/4F177775-F1ED-4967-905B-EA989C4E42BE/d/Visual Studio Code.app/Contents/Resources/app/extensions/emmet/dist/extension
+[2020-07-31 15:47:42.227] [exthost] [info] ExtensionService#_doActivateExtension vscode.git {"startup":true,"extensionId":{"value":"vscode.git","_lower":"vscode.git"},"activationEvent":"*"}
+[2020-07-31 15:47:42.227] [exthost] [info] ExtensionService#loadCommonJSModule file:///private/var/folders/hj/4w0jzmxx1yjcmd2g3jc3wdv00000gp/T/AppTranslocation/4F177775-F1ED-4967-905B-EA989C4E42BE/d/Visual Studio Code.app/Contents/Resources/app/extensions/git/dist/main
+[2020-07-31 15:47:42.257] [exthost] [info] ExtensionService#_doActivateExtension vscode.merge-conflict {"startup":true,"extensionId":{"value":"vscode.merge-conflict","_lower":"vscode.merge-conflict"},"activationEvent":"*"}
+[2020-07-31 15:47:42.257] [exthost] [info] ExtensionService#loadCommonJSModule file:///private/var/folders/hj/4w0jzmxx1yjcmd2g3jc3wdv00000gp/T/AppTranslocation/4F177775-F1ED-4967-905B-EA989C4E42BE/d/Visual Studio Code.app/Contents/Resources/app/extensions/merge-conflict/dist/extension
+[2020-07-31 15:47:42.260] [exthost] [info] eager extensions activated
