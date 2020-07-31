@@ -1,0 +1,43 @@
+version: 2.0
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.7.1
+        environment:
+          RAILS_ENV: test
+      - image: circleci/postgres:11
+    steps:
+      - checkout
+
+      # Restore bundle cache
+      - restore_cache:
+          key: co-op-{{ checksum "Gemfile.lock" }}
+
+      # Bundle install dependencies
+      - run:
+          name: Install dependencies
+          command: bundle install --path vendor/bundle
+
+      # Store bundle cache
+      - save_cache:
+          key: co-op-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+      # Database setup
+      - run:
+          name: Create database
+          command: bundle exec rake db:create
+      - run:
+          name: Load database schema
+          command: bundle exec rake db:schema:load
+
+      # Tests
+      - run:
+          name: RSpec
+          command: bundle exec rspec
+
+      # Save Coverage Analysis
+      - store_artifacts:
+          path: coverage
+          destination: coverage
