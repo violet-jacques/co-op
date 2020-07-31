@@ -6,4 +6,16 @@ RSpec.describe User do
     it { should allow_value("email@addresse.foo").for(:email) }
     it { should_not allow_value("foo").for(:email) }
   end
+
+  describe "#serialize" do
+    let(:user) { build(:user) }
+
+    before { allow(UserSerializer).to receive(:serialize).with(user) }
+
+    it "passes self to the user serializer" do
+      user.serialize
+
+      expect(UserSerializer).to have_received(:serialize).with(user)
+    end
+  end
 end
