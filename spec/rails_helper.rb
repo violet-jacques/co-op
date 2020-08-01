@@ -86,3 +86,79 @@ end
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 end
+
+RSpec::Matchers.define :delegate_field do |field|
+  match do |type_class|
+    value = double(:value) # rubocop:disable RSpec/VerifiedDoubles
+    model = instance_double(model_class, (model_method || field) => value).as_null_object
+
+    graphql_field = field.to_s.camelcase(:lower).to_sym
+    expect(resolve_class_field(type: type_class, field: graphql_field, object: model)).to eq value
+  end
+
+  failure_message do
+    "expected that #{field} would be delegated to the #{model_method || field} method on an instance of #{model_class} but it wasn't"
+  end
+
+  chain :to, :model_class
+  chain :method, :model_method
+end
+
+def resolve_class_field(type:, field:, object: nil, arguments: {}, context: {})
+  GraphQLFieldResolver.new(type: type, field: field, object: object, arguments: arguments, context: context).resolve
+end
+
+# frozen_string_literal: true
+
+class GraphQLFieldResolver
+  def initialize(schema: GraphQL::Schema, type:, field:, object: nil, arguments: {}, context: {})
+    @schema = schema
+    @type = type
+    @field = field
+    @object = object
+    @arguments = arguments
+    @context = context
+  end
+
+  def resolve(camelize: true)
+    formatted_field = camelize ? field.to_s.camelize(:lower) : field.to_s
+
+    type.fields[formatted_field].resolve_field(type_instance, input_instance, context_instance)
+  end
+
+  private
+
+  attr_reader :schema, :type, :field, :object, :arguments, :context
+
+  def query_instance
+    @_query_instance ||= GraphQL::Query.new(schema)
+  end
+
+  def context_instance
+    @_context_instance ||= GraphQL::Query::Context.new(query: query_instance, values: context, object: nil)
+  end
+
+  def type_instance
+    @_type_instance ||= type.authorized_new(object, context_instance)
+  end
+
+  def input_instance
+    input_class = Class.new(GraphQL::Schema::InputObject)
+    input_class.arguments_class = arguments_class
+    input_class.new(arguments, context: nil, defaults_used: {})
+  end
+
+  def arguments_class
+    Class.new(GraphQL::Query::Arguments).tap do |klass|
+      klass.argument_definitions = argument_definitions
+    end
+  end
+
+  def argument_definitions
+    @_argument_definitions ||= arguments.each_with_object({}) do |(arg_name, _arg_value), new_args|
+      argument = GraphQL::Argument.new
+      argument.name = arg_name.to_s
+      new_args[arg_name.to_s] = argument
+    end
+  end
+end
