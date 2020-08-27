@@ -10,10 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_31_201428) do
+ActiveRecord::Schema.define(version: 2020_07_31_220313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "user_details", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "first_name", null: false
+    t.string "last_name", default: "", null: false
+    t.integer "transgender", default: 0, null: false
+    t.integer "gender", default: 0, null: false
+    t.integer "race", default: 0, null: false
+    t.datetime "birthday", null: false
+    t.integer "disabled", default: 0, null: false
+    t.integer "sexuality", default: 0, null: false
+    t.string "pronouns", default: "", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["disabled"], name: "index_user_details_on_disabled"
+    t.index ["gender"], name: "index_user_details_on_gender"
+    t.index ["race"], name: "index_user_details_on_race"
+    t.index ["sexuality"], name: "index_user_details_on_sexuality"
+    t.index ["transgender"], name: "index_user_details_on_transgender"
+    t.index ["user_id"], name: "index_user_details_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -27,4 +48,5 @@ ActiveRecord::Schema.define(version: 2020_07_31_201428) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "user_details", "users"
 end
