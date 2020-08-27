@@ -26,15 +26,15 @@ jobs:
       - image: cimg/ruby:2.7-node # this is our primary docker image, where step commands run.
       - image: circleci/postgres:9.5-alpine
         environment: # add POSTGRES environment variables.
-          POSTGRES_USER: co-op
-          POSTGRES_DB: co_op_test
+          POSTGRES_USER: we-are
+          POSTGRES_DB: we_are_test
           POSTGRES_PASSWORD: ""
     # environment variables specific to Ruby/Rails, applied to the primary container.
     environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
       PGHOST: 127.0.0.1
-      PGUSER: co-op
+      PGUSER: we-are
       PGPASSWORD: ""
       RAILS_ENV: test
     # A series of steps to run, some are similar to those in "build".
